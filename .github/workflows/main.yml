@@ -1,0 +1,36 @@
+name: Build AmbulanceFull ASIs
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
+
+      - name: Compile
+        shell: pwsh
+        run: |
+          foreach ($n in @("AmbulanceFull","AmbulanceFullVC")) {
+            $src = Get-ChildItem -Recurse -Filter "$n.cpp" | Select-Object -First 1
+            if (-not $src) { throw "$n.cpp nao encontrado" }
+            Push-Location $src.DirectoryName
+            cl /nologo /LD /O1 /GS- /W3 "$n.cpp" /Fe:"$n.asi" /link /NODEFAULTLIB /ENTRY:DllMain kernel32.lib user32.lib
+            if ($LASTEXITCODE -ne 0) { throw "Falha na compilacao: $n" }
+            Pop-Location
+          }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AmbulanceFull
+          path: |
+            **/AmbulanceFull.asi
+            **/AmbulanceFull.ini
+            **/AmbulanceFullVC.asi
+            **/AmbulanceFullVC.ini
