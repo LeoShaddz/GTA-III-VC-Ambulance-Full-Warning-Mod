@@ -1,6 +1,8 @@
 # GTA III / Vice City Ambulance Full Warning Mod
 
-This mod makes the "Ambulance full" notification appear on-screen as soon as the ambulance becomes full during paramedic missions.
+In the original game, this message only appears when the ambulance is full and you attempt to pick up another patient, it does not appear the moment the ambulance reaches capacity. Consequently, if you are not paying close attention, you might end up wasting time trying to pick up a patient without realizing that the ambulance is already full. 
+
+So this mod makes the "Ambulance full" notification appear on-screen as soon as the ambulance becomes full during paramedic missions, preventing what I mentioned earlier from happening.
 
 # Installation
 
